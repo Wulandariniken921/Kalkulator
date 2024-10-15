@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Sederhana</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        label {
+            margin-right: 10px;
+        }
+        input[type="number"], select {
+            margin-bottom: 10px;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .stars {
+            color: red;
+            font-size: 20px;
+        }
+        .triangle {
+            color: red;
+            font-size: 20px;
+        }
+        pre {
+            margin: 0;
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Kalkulator Sederhana</h1>
+    <form id="calculatorForm">
+        <label for="number1">Masukkan angka pertama:</label>
+        <input type="number" id="number1" required><br><br>
+
+        <label for="number2">Masukkan angka kedua:</label>
+        <input type="number" id="number2" required><br><br>
+
+        <label for="operator">Pilih Operator:</label>
+        <select id="operator">
+            <option value="add">Penjumlahan (+)</option>
+            <option value="subtract">Pengurangan (-)</option>
+            <option value="multiply">Perkalian (×)</option>
+            <option value="divide">Pembagian (/)</option>
+        </select><br><br>
+
+        <button type="button" onclick="calculate()">Hitung</button>
+        <button type="button" onclick="clearForm()">Clear</button>
+    </form>
+
+    <div class="result" id="result"></div>
+    <div class="stars" id="stars"></div>
+    <pre class="triangle" id="triangle"></pre>
+
+    <script>
+        function isPrime(num) {
+            if (num < 2) return false;
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+        function createTriangle(count) {
+            const triangleDiv = document.getElementById("triangle");
+            let triangle = '';
+            for (let i = 1; i <= count; i++) {
+                triangle += ' '.repeat(count - i) + '★'.repeat(2 * i - 1) + '\n';
+            }
+            triangleDiv.innerHTML = triangle;
+        }
+        function calculate() {
+            const number1 = parseFloat(document.getElementById("number1").value);
+            const number2 = parseFloat(document.getElementById("number2").value);
+            const operator = document.getElementById("operator").value;
+            let result;
+            if (operator === "add") {
+                result = number1 + number2;
+            } else if (operator === "subtract") {
+                result = number1 - number2;
+            } else if (operator === "multiply") {
+                result = number1 * number2;
+            } else if (operator === "divide") {
+                result = number1 / number2;
+            }
+            document.getElementById("result").innerHTML = `Hasil: ${result}`;
+            document.getElementById("triangle").innerHTML = '';
+            createTriangle(Math.abs(Math.round(result)));
+        }
+        function clearForm() {
+            document.getElementById("number1").value = '';
+            document.getElementById("number2").value = '';
+            document.getElementById("operator").value = 'add';
+            document.getElementById("result").innerHTML = '';
+            document.getElementById("triangle").innerHTML = '';
+        }
+    </script>
+
+</body>
+</html>
